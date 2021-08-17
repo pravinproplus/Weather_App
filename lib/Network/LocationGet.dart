@@ -1,5 +1,3 @@
-
-
 import 'package:geolocator/geolocator.dart';
 
 class LocationGet {
@@ -13,7 +11,6 @@ class LocationGet {
 
       latitude = position!.latitude;
       longtitude = position!.longitude;
-
       print(position);
     } catch (e) {
       print(e);

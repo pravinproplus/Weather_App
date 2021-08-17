@@ -5,13 +5,15 @@ class NetworkHelper {
   final String url;
   Future getData() async {
     Dio dio = Dio();
-    Response response = await dio.get(url);
-    if (response.statusCode == 200) {
-      var data = response.data;
-
-      return data;
-    } else {
-      print(response.statusCode);
+    try {
+      Response response = await dio.get(url);
+      if (response.statusCode == 200) {
+        var data = response.data;
+        print(data);
+        return data;
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

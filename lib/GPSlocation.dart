@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_task/Network/LocationGet.dart';
+import 'package:weather_task/Network/ViewWeb.dart';
 import 'package:weather_task/weatherdata/WeatherData.dart';
 
 import 'Network/NetworkHelper.dart';
@@ -21,13 +22,13 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
   double? lat;
   double? long;
   double? tem;
-  int? id;
+  var id;
   var iconn;
-  String? name;
-  String? main;
+  var name;
+  var main;
   var weatherdata;
   String? urls;
-  WeatherData weatherData = WeatherData();
+  String? ds;
 
   @override
   void initState() {
@@ -42,23 +43,34 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
     setState(() {
       lat = location.latitude;
       long = location.longtitude;
+      getWeatherData();
     });
-    getWeatherData();
   }
 
   //Get Weather
   Future getWeatherData() async {
     NetworkHelper networkHelper = NetworkHelper(
-        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$apiKey&units=met');
+        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$apiKey&units=metric'
+        //'https://api.openweathermap.org/data/2.5/weather?lat=11.387387387387387&lon=78.33484064724306&appid=99d92cc95a2292104c6595069ad89ce4'
+
+        );
     weatherdata = await networkHelper.getData();
+    weatherdata == null ? CircularProgressIndicator() : print(weatherdata);
     setState(() {
       tem = weatherdata['main']['temp'];
       id = weatherdata['weather'][0]['id'];
       name = weatherdata['name'];
       main = weatherdata['weather'][0]['main'];
-      urls = weatherData.getWeathericon(id!);
-
+      getIcon();
       // iconn = weatherdata['weatherdata'][0]['icon'];
+    });
+  }
+
+  Future getIcon() async {
+    WeatherData weatherData = WeatherData();
+    setState(() {
+      urls = weatherData.getWeathericon(id);
+      ds = urls;
     });
   }
 
@@ -112,7 +124,17 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
               "$main",
               style: TextStyle(color: Colors.red),
             ),
-            Image(image: NetworkImage(urls!))
+            GestureDetector(
+              child: Image(image: NetworkImage(ds!)),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ViewWeb(
+                    lats: lat,
+                    longs: long,
+                  );
+                }));
+              },
+            )
           ],
         ),
       ),
