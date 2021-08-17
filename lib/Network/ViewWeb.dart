@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+// ignore: must_be_immutable
 class ViewWeb extends StatefulWidget {
   ViewWeb({this.lats, this.longs});
   double? lats;
@@ -15,11 +16,11 @@ class _ViewWebState extends State<ViewWeb> {
 
   @override
   void initState() {
-    get_da();
+    getdata();
     super.initState();
   }
 
-  get_da() {
+  getdata() {
     setState(() {
       hs = widget.longs;
       ws = widget.lats;

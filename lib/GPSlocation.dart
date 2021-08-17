@@ -55,12 +55,8 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
 
         );
     weatherdata = await networkHelper.getData();
-    weatherdata == null ? CircularProgressIndicator() : print(weatherdata);
+    //weatherdata == null ? CircularProgressIndicator() : print(weatherdata);
     setState(() {
-      tem = weatherdata['main']['temp'];
-      id = weatherdata['weather'][0]['id'];
-      name = weatherdata['name'];
-      main = weatherdata['weather'][0]['main'];
       getIcon();
       // iconn = weatherdata['weatherdata'][0]['icon'];
     });
@@ -69,6 +65,10 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
   Future getIcon() async {
     WeatherData weatherData = WeatherData();
     setState(() {
+      tem = weatherdata['main']['temp'];
+      id = weatherdata['weather'][0]['id'];
+      name = weatherdata['name'];
+      main = weatherdata['weather'][0]['main'];
       urls = weatherData.getWeathericon(id);
       ds = urls;
     });
@@ -79,7 +79,7 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
     return Scaffold(
         body: Center(
       child: Container(
-        height: 300.0,
+        height: 400.0,
         width: 300.0,
         child: Column(
           children: [
@@ -124,17 +124,25 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
               "$main",
               style: TextStyle(color: Colors.red),
             ),
-            GestureDetector(
-              child: Image(image: NetworkImage(ds!)),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ViewWeb(
-                    lats: lat,
-                    longs: long,
-                  );
-                }));
-              },
-            )
+            Divider(
+              height: 20.0,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.grey[350],
+                  borderRadius: BorderRadius.circular(20.0)),
+              child: InkWell(
+                child: Image(image: NetworkImage(ds!)),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ViewWeb(
+                      lats: lat,
+                      longs: long,
+                    );
+                  }));
+                },
+              ),
+            ),
           ],
         ),
       ),
