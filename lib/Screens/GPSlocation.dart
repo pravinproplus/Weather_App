@@ -70,13 +70,7 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
     return Container(
       decoration: BoxDecoration(
           color: Colors.grey[350], borderRadius: BorderRadius.circular(20.0)),
-      child: InkWell(
-        child: Image(image: NetworkImage(urls!)),
-        onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => WeekWeatherScreen()));
-        },
-      ),
+      child: Image(image: NetworkImage(urls!)),
     );
   }
 
@@ -135,6 +129,23 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                   height: 20.0,
                 ),
                 urls == null ? CircularProgressIndicator() : displayIcon(),
+                Divider(),
+                Container(
+                  height: 40.0,
+                  width: 100.0,
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: TextButton(
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WeekWeatherScreen())),
+                    child: Text(
+                      "Future Data",
+                      style: TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
