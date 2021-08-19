@@ -8,8 +8,7 @@ class NetworkHelper {
     try {
       Response response = await dio.get(url);
       if (response.statusCode == 200) {
-        var data = response.data;
-        print(data);
+        Map data = response.data;
         return data;
       }
     } catch (e) {

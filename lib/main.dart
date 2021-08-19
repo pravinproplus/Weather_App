@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'GPSlocation.dart';
+import 'Screens/GPSlocation.dart';
 
 void main(List<String> args) {
   runApp(
