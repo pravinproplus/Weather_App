@@ -64,7 +64,7 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
                       width: 10.0,
                     ),
                     Container(
-                      width: 60.0,
+                      width: 80.0,
                       child: Text(
                         DateFormat('EEEE').format(
                             DateTime.fromMillisecondsSinceEpoch(
@@ -73,7 +73,7 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: 110.0,
+                      width: 100.0,
                     ),
                     Image.network("http://openweathermap.org/img/wn/" +
                         weatherweekdata[index]['weather'][0]['icon']
