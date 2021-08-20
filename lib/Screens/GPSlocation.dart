@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_task/Network/LocationGet.dart';
+import 'package:weather_task/Screens/HourScreen.dart';
 import 'package:weather_task/Screens/WeekWeatherScreen.dart';
 import '../Network/NetworkHelper.dart';
 
@@ -21,6 +23,7 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
   String? iconn;
   String? name;
   var main;
+  var date;
   var weatherdata;
   String? urls;
   String? ds;
@@ -47,7 +50,6 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
     NetworkHelper networkHelper = NetworkHelper(
         'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$apiKey&units=metric'
         //'https://api.openweathermap.org/data/2.5/weather?lat=11.387387387387387&lon=78.33484064724306&appid=99d92cc95a2292104c6595069ad89ce4'
-
         );
     weatherdata = await networkHelper.getData();
     setState(() {
@@ -60,6 +62,8 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
       tem = weatherdata['main']['temp'];
       id = weatherdata['weather'][0]['id'];
       name = weatherdata['name'];
+      date = weatherdata['dt'];
+      print(date);
       main = weatherdata['weather'][0]['main'];
       iconn = weatherdata['weather'][0]['icon'];
       urls = "http://openweathermap.org/img/wn/$iconn@2x.png";
@@ -68,87 +72,84 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
 
   Widget displayIcon() {
     return Container(
-      decoration: BoxDecoration(
-          color: Colors.grey[350], borderRadius: BorderRadius.circular(20.0)),
-      child: Image(image: NetworkImage(urls!)),
+      child: Image(
+        image: NetworkImage(urls!),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: Colors.blue,
-        body: Center(
-          child: Container(
-            height: 400.0,
-            width: 300.0,
-            child: Column(
-              children: [
-                Text(
-                  "Temputature is :",
-                  style: texts,
-                ),
-                Text(
-                  "$tem",
-                  style: value,
-                ),
-                Divider(
-                  height: 10.0,
-                ),
-                Text(
-                  "ID is :",
-                  style: texts,
-                ),
-                Text(
-                  "$id",
-                  style: value,
-                ),
-                Divider(
-                  height: 10.0,
-                ),
-                Text(
-                  "Location is :",
-                  style: texts,
-                ),
-                Text(
-                  "$name",
-                  style: value,
-                ),
-                Divider(
-                  height: 10.0,
-                ),
-                Text(
-                  "Sky is :",
-                  style: texts,
-                ),
-                Text(
-                  "$main",
-                  style: value,
-                ),
-                Divider(
-                  height: 20.0,
-                ),
-                urls == null ? CircularProgressIndicator() : displayIcon(),
-                Divider(),
-                Container(
-                  height: 40.0,
-                  width: 100.0,
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: TextButton(
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => WeekWeatherScreen())),
-                    child: Text(
-                      "Future Data",
-                      style: TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.bold),
+        body: Container(
+          color: Colors.blue,
+          height: double.maxFinite,
+          width: double.maxFinite,
+          child: Column(
+            children: [
+              Container(
+                height: 350.0,
+                width: double.maxFinite,
+                decoration: BoxDecoration(color: Colors.blue),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10.0,
                     ),
-                  ),
+                    Text(
+                      "$main",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 50.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 70.0,
+                        ),
+                        Text(
+                          DateFormat('yMMMEd').format(
+                              DateTime.fromMillisecondsSinceEpoch(date * 1000)),
+                          style: texts,
+                        ),
+                        Divider(
+                          thickness: 2,
+                          height: 10.0,
+                          indent: 10,
+                          color: Colors.blue,
+                        ),
+                        Text(
+                          "$name",
+                          style: texts,
+                        ),
+                      ],
+                    ),
+                    Text(
+                      "$tem" + "℃",
+                      style: TextStyle(color: Colors.white, fontSize: 80.0),
+                    ),
+                    urls == null ? CircularProgressIndicator() : displayIcon(),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              Container(
+                height: 150.0,
+                child: HourScreen(),
+              ),
+              Expanded(
+                child: Container(
+                  width: double.maxFinite,
+                  height: 300.0,
+                  child: WeekWeatherScreen(),
+                ),
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

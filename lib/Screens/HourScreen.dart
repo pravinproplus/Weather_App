@@ -4,13 +4,16 @@ import 'package:intl/intl.dart';
 import 'package:weather_task/Network/LocationGet.dart';
 import 'package:weather_task/Screens/GPSlocation.dart';
 
-// ignore: must_be_immutable
-class WeekWeatherScreen extends StatefulWidget {
+import 'WeekWeatherScreen.dart';
+
+class HourScreen extends StatefulWidget {
+  const HourScreen({Key? key}) : super(key: key);
+
   @override
-  _WeekWeatherScreenState createState() => _WeekWeatherScreenState();
+  _HourScreenState createState() => _HourScreenState();
 }
 
-class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
+class _HourScreenState extends State<HourScreen> {
   Dio dio = Dio();
   double? lat;
   double? long;
@@ -35,10 +38,10 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
   Future getWeatherData() async {
     try {
       Response response = await dio.get(
-          'http://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$long&exclude=minutely&appid=$apiKey&units=metric');
+          'http://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$long&exclude=minutely,daily&appid=$apiKey&units=metric');
       var ds = response.data;
       setState(() {
-        weatherweekdata = ds['daily'];
+        weatherweekdata = ds['hourly'];
       });
       print(weatherweekdata[0]['temp']);
     } catch (e) {
@@ -50,7 +53,7 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-          scrollDirection: Axis.vertical,
+          scrollDirection: Axis.horizontal,
           itemCount: weatherweekdata.length,
           itemBuilder: (context, index) => Container(
                 decoration: BoxDecoration(
@@ -58,29 +61,20 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
                 ),
                 width: 100.0,
                 height: 100.0,
-                child: Row(
+                child: Column(
                   children: [
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    Container(
-                      width: 60.0,
-                      child: Text(
-                        DateFormat('EEEE').format(
-                            DateTime.fromMillisecondsSinceEpoch(
-                                weatherweekdata[index]['dt'] * 1000)),
-                        style: texts,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 110.0,
-                    ),
                     Image.network("http://openweathermap.org/img/wn/" +
                         weatherweekdata[index]['weather'][0]['icon']
                             .toString() +
                         "@2x.png"),
                     Text(
-                      weatherweekdata[index]['temp']['day'].toString() + '℃',
+                      weatherweekdata[index]['temp'].toString() + '℃',
+                      style: texts,
+                    ),
+                    Text(
+                      DateFormat('jm').format(
+                          DateTime.fromMillisecondsSinceEpoch(
+                              weatherweekdata[index]['dt'] * 1000)),
                       style: texts,
                     ),
                   ],
@@ -89,8 +83,3 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
     );
   }
 }
-
-TextStyle texts =
-    TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white);
-TextStyle value =
-    TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.yellow);
