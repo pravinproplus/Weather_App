@@ -29,6 +29,8 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
   var weatherdata;
   String? urls;
   String? ds;
+  var windspeed;
+  var humd;
 
   @override
   void initState() {
@@ -65,8 +67,10 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
       id = weatherdata['weather'][0]['id'];
       name = weatherdata['name'];
       date = weatherdata['dt'];
+      windspeed = weatherdata['wind']['speed'];
       main = weatherdata['weather'][0]['main'];
       iconn = weatherdata['weather'][0]['icon'];
+      humd = weatherdata['main']['humidity'];
       urls = "http://openweathermap.org/img/wn/$iconn@2x.png";
       isNull = !isNull;
     });
@@ -137,6 +141,7 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                               SizedBox(
                                 width: 70.0,
                               ),
+                              //circular indicator
                               date == null
                                   ? CircularProgressIndicator()
                                   : Text(
@@ -181,12 +186,45 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                                     fontWeight: FontWeight.w700)),
                           ),
                           displayIcon(),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 43.0,
+                              ),
+                              Text(
+                                "Wind Speed : $windspeed/hr",
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.height *
+                                                0.018,
+                                        color: Colors.grey[800],
+                                        fontWeight: FontWeight.w700)),
+                              ),
+                              SizedBox(
+                                width: 60.0,
+                              ),
+                              Text(
+                                "Humidity: $humd",
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.height *
+                                                0.018,
+                                        color: Colors.grey[800],
+                                        fontWeight: FontWeight.w700)),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
                     Container(
                       width: double.maxFinite,
-                      height: 100.0,
+                      height: 140.0,
                       child: WeekWeatherScreen(),
                     ),
                     Text(
@@ -198,6 +236,7 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                               color: Colors.grey[800],
                               fontWeight: FontWeight.w700)),
                     ),
+                    SizedBox(height: 20.0),
                     Container(
                       height: 150.0,
                       child: HourScreen(),

@@ -16,7 +16,7 @@ class _HourScreenState extends State<HourScreen> {
   Dio dio = Dio();
   double? lat;
   double? long;
-  List weatherweekdata = [];
+  List weatherhourdata = [];
   @override
   void initState() {
     getLocation();
@@ -40,9 +40,9 @@ class _HourScreenState extends State<HourScreen> {
           'http://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$long&exclude=minutely,daily&appid=$apiKey&units=metric');
       var ds = response.data;
       setState(() {
-        weatherweekdata = ds['hourly'];
+        weatherhourdata = ds['hourly'];
       });
-      print(weatherweekdata[0]['temp']);
+      // print(weatherweekdata[0]['temp']);
     } catch (e) {
       print(e);
     }
@@ -53,46 +53,38 @@ class _HourScreenState extends State<HourScreen> {
     return Scaffold(
       body: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: weatherweekdata.length,
+        itemCount: weatherhourdata.length,
         itemBuilder: (context, index) => Container(
           decoration: BoxDecoration(
             color: Color(0xFFFFC043),
-            // gradient: LinearGradient(colors: [
-            //   Color(0xFFEFAA1F),
-            //   Color(0xFFFFC043),
-            // ]),
           ),
-          width: 80.0,
+          width: 60.0,
           child: Column(
             children: [
               Image.network(
                 "http://openweathermap.org/img/wn/" +
-                    weatherweekdata[index]['weather'][0]['icon'].toString() +
+                    weatherhourdata[index]['weather'][0]['icon'].toString() +
                     "@2x.png",
               ),
               Text(
-                weatherweekdata[index]['temp'].toString() + '℃',
+                weatherhourdata[index]['temp'].toString() + '℃',
                 style: GoogleFonts.openSans(
                   textStyle: TextStyle(
-                      fontSize: MediaQuery.of(context).size.height * 0.018,
+                      fontSize: MediaQuery.of(context).size.height * 0.014,
                       color: Colors.grey[800],
                       fontWeight: FontWeight.w700),
                 ),
               ),
-              weatherweekdata[index]['dt'] == null
-                  ? CircularProgressIndicator()
-                  : Text(
-                      DateFormat('jm').format(
-                          DateTime.fromMillisecondsSinceEpoch(
-                              weatherweekdata[index]['dt'] * 1000)),
-                      style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.018,
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
+              Text(
+                DateFormat('jm').format(DateTime.fromMillisecondsSinceEpoch(
+                    weatherhourdata[index]['dt'] * 1000)),
+                style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height * 0.014,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.w700),
+                ),
+              ),
             ],
           ),
         ),

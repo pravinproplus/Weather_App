@@ -56,13 +56,8 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
         itemBuilder: (context, index) => Container(
           decoration: BoxDecoration(
             color: Color(0xFFFFC043),
-            // gradient: LinearGradient(colors: [
-            //   Color(0xFFEFAA1F),
-            //   Color(0xFFFFC043),
-            // ]),
           ),
-          width: 45.0,
-          // height: 100.0,
+          width: 80.0,
           child: Column(
             children: [
               Image.network("http://openweathermap.org/img/wn/" +
@@ -72,25 +67,21 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
                 weatherweekdata[index]['temp']['day'].toString() + '℃',
                 style: GoogleFonts.openSans(
                   textStyle: TextStyle(
-                      fontSize: MediaQuery.of(context).size.height * 0.014,
+                      fontSize: MediaQuery.of(context).size.height * 0.018,
                       color: Colors.grey[800],
                       fontWeight: FontWeight.w700),
                 ),
               ),
-              weatherweekdata[index]['dt'] == null
-                  ? CircularProgressIndicator()
-                  : Text(
-                      DateFormat('E').format(
-                          DateTime.fromMillisecondsSinceEpoch(
-                              weatherweekdata[index]['dt'] * 1000)),
-                      style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.014,
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.w700),
-                      ),
-                    )
+              Text(
+                DateFormat('E').format(DateTime.fromMillisecondsSinceEpoch(
+                    weatherweekdata[index]['dt'] * 1000)),
+                style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height * 0.018,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.w700),
+                ),
+              )
             ],
           ),
         ),
