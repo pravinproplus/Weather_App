@@ -16,6 +16,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   double? lat;
   double? long;
+  String? iconn;
+  String? urls;
   Dio dio = Dio();
   var currentdata;
   @override
@@ -41,15 +43,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Future getWeatherData() async {
     try {
       Response response = await dio.get(
-          'http://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$long&exclude=minutely,daily&appid=$apiKey&units=metric');
+          'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$apiKey&units=metric');
       var ds = response.data;
       setState(() {
-        currentdata = ds['hourly'];
+        iconn = ds['weather'][0]['icon'];
+        urls = "http://openweathermap.org/img/wn/$iconn@2x.png";
       });
-      print(currentdata[0]['weather'][0]['icon']);
+      print(urls);
     } catch (e) {
       print(e);
     }
+  }
+
+  Widget displayIcon() {
+    return Image(
+      image: NetworkImage(urls!),
+    );
   }
 
   @override
@@ -66,11 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ))),
         actions: [
           InkWell(
-            child: Image.network(
-              "http://openweathermap.org/img/wn/" +
-                  currentdata[0]['weather'][0]['icon'].toString() +
-                  "@2x.png",
-            ),
+            child: urls == null ? CircularProgressIndicator() : displayIcon(),
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(

@@ -64,7 +64,6 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
       id = weatherdata['weather'][0]['id'];
       name = weatherdata['name'];
       date = weatherdata['dt'];
-      print(date);
       main = weatherdata['weather'][0]['main'];
       iconn = weatherdata['weather'][0]['icon'];
       urls = "http://openweathermap.org/img/wn/$iconn@2x.png";
