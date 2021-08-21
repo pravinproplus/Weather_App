@@ -4,6 +4,7 @@ import 'package:weather_task/Network/LocationGet.dart';
 import 'package:weather_task/Screens/HourScreen.dart';
 import 'package:weather_task/Screens/WeekWeatherScreen.dart';
 import '../Network/NetworkHelper.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //Weather Apikey
 const apiKey = "99d92cc95a2292104c6595069ad89ce4";
@@ -71,10 +72,8 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
   }
 
   Widget displayIcon() {
-    return Container(
-      child: Image(
-        image: NetworkImage(urls!),
-      ),
+    return Image(
+      image: NetworkImage(urls!),
     );
   }
 
@@ -82,9 +81,8 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFFFFC043),
         body: Container(
-          color: Colors.blue,
           height: double.maxFinite,
           width: double.maxFinite,
           child: Column(
@@ -92,29 +90,49 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
               Container(
                 height: 350.0,
                 width: double.maxFinite,
-                decoration: BoxDecoration(color: Colors.blue),
+                decoration: BoxDecoration(
+                  // color: Colors.blue,
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFFEFAA1F),
+                        Color(0xFFFFC043),
+                      ]),
+                ),
                 child: Column(
                   children: [
                     SizedBox(
                       height: 10.0,
                     ),
-                    Text(
-                      "$main",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 50.0,
-                          fontWeight: FontWeight.bold),
-                    ),
+                    Text("$main",
+                        style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.050,
+                              color: Colors.grey[800],
+                              fontWeight: FontWeight.w700),
+                        )),
                     Row(
                       children: [
                         SizedBox(
                           width: 70.0,
                         ),
-                        Text(
-                          DateFormat('yMMMEd').format(
-                              DateTime.fromMillisecondsSinceEpoch(date * 1000)),
-                          style: texts,
-                        ),
+                        date == null
+                            ? CircularProgressIndicator()
+                            : Text(
+                                DateFormat('yMMMEd').format(
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                        date * 1000)),
+                                style: GoogleFonts.openSans(
+                                  textStyle: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.height *
+                                              0.018,
+                                      color: Colors.grey[800],
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
                         Divider(
                           thickness: 2,
                           height: 10.0,
@@ -123,29 +141,46 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                         ),
                         Text(
                           "$name",
-                          style: texts,
+                          style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.018,
+                                color: Colors.grey[800],
+                                fontWeight: FontWeight.w700),
+                          ),
                         ),
                       ],
                     ),
                     Text(
                       "$tem" + "℃",
-                      style: TextStyle(color: Colors.white, fontSize: 80.0),
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.088,
+                              color: Colors.grey[800],
+                              fontWeight: FontWeight.w700)),
                     ),
                     urls == null ? CircularProgressIndicator() : displayIcon(),
                   ],
                 ),
               ),
               Container(
+                width: double.maxFinite,
+                height: 100.0,
+                child: WeekWeatherScreen(),
+              ),
+              Text(
+                'Hour',
+                style: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                        fontSize: MediaQuery.of(context).size.height * 0.018,
+                        color: Colors.grey[800],
+                        fontWeight: FontWeight.w700)),
+              ),
+              Container(
                 height: 150.0,
                 child: HourScreen(),
               ),
-              Expanded(
-                child: Container(
-                  width: double.maxFinite,
-                  height: 300.0,
-                  child: WeekWeatherScreen(),
-                ),
-              )
             ],
           ),
         ),

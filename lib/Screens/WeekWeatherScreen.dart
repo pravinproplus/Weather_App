@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_task/Network/LocationGet.dart';
 import 'package:weather_task/Screens/GPSlocation.dart';
@@ -50,47 +51,50 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: weatherweekdata.length,
-          itemBuilder: (context, index) => Container(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
+        scrollDirection: Axis.horizontal,
+        itemCount: weatherweekdata.length,
+        itemBuilder: (context, index) => Container(
+          decoration: BoxDecoration(
+            color: Color(0xFFFFC043),
+            // gradient: LinearGradient(colors: [
+            //   Color(0xFFEFAA1F),
+            //   Color(0xFFFFC043),
+            // ]),
+          ),
+          width: 45.0,
+          // height: 100.0,
+          child: Column(
+            children: [
+              Image.network("http://openweathermap.org/img/wn/" +
+                  weatherweekdata[index]['weather'][0]['icon'].toString() +
+                  "@2x.png"),
+              Text(
+                weatherweekdata[index]['temp']['day'].toString() + '℃',
+                style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height * 0.014,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.w700),
                 ),
-                width: 100.0,
-                height: 100.0,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    Container(
-                      width: 80.0,
-                      child: Text(
-                        DateFormat('EEEE').format(
-                            DateTime.fromMillisecondsSinceEpoch(
-                                weatherweekdata[index]['dt'] * 1000)),
-                        style: texts,
+              ),
+              weatherweekdata[index]['dt'] == null
+                  ? CircularProgressIndicator()
+                  : Text(
+                      DateFormat('E').format(
+                          DateTime.fromMillisecondsSinceEpoch(
+                              weatherweekdata[index]['dt'] * 1000)),
+                      style: GoogleFonts.openSans(
+                        textStyle: TextStyle(
+                            fontSize:
+                                MediaQuery.of(context).size.height * 0.014,
+                            color: Colors.grey[800],
+                            fontWeight: FontWeight.w700),
                       ),
-                    ),
-                    SizedBox(
-                      width: 100.0,
-                    ),
-                    Image.network("http://openweathermap.org/img/wn/" +
-                        weatherweekdata[index]['weather'][0]['icon']
-                            .toString() +
-                        "@2x.png"),
-                    Text(
-                      weatherweekdata[index]['temp']['day'].toString() + '℃',
-                      style: texts,
-                    ),
-                  ],
-                ),
-              )),
+                    )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
-
-TextStyle texts =
-    TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white);
-TextStyle value =
-    TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.yellow);
