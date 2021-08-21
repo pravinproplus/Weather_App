@@ -23,9 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
   var currentdata;
   @override
   void initState() {
-    GetGPSlocation();
-    WeekWeatherScreen();
-    HourScreen();
     getLocation();
     super.initState();
   }
