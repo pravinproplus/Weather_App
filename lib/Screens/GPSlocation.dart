@@ -97,10 +97,14 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
   @override
   Widget build(BuildContext context) {
     return isNull == true
-        ? Center(
-            child: CircularProgressIndicator(
-            color: Color(0xFF00D3DB),
-          ))
+        ? Scaffold(
+            backgroundColor: Color(0xFFFFC043),
+            body: Center(
+              child: CircularProgressIndicator(
+                color: Color(0xFF00D3DB),
+              ),
+            ),
+          )
         : SafeArea(
             child: Scaffold(
               backgroundColor: Color(0xFFFFC043),

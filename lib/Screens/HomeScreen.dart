@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_task/Network/LocationGet.dart';
 import 'package:weather_task/Screens/GPSlocation.dart';
-import 'package:weather_task/Screens/HourScreen.dart';
-import 'package:weather_task/Screens/WeekWeatherScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -34,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       lat = location.latitude;
       long = location.longtitude;
+      print(lat);
       getWeatherData();
     });
   }
@@ -67,14 +66,16 @@ class _HomeScreenState extends State<HomeScreen> {
         : Scaffold(
             appBar: AppBar(
               title: Center(
-                  child: Text('Onefarmer',
-                      style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.028,
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.w700),
-                      ))),
+                child: Text(
+                  'Onefarmer',
+                  style: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                        fontSize: MediaQuery.of(context).size.height * 0.028,
+                        color: Colors.grey[800],
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ),
               actions: [
                 InkWell(
                   child: urls == null

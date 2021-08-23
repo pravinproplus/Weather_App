@@ -49,41 +49,39 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: weatherweekdata.length,
-        itemBuilder: (context, index) => Container(
-          decoration: BoxDecoration(
-            color: Color(0xFFFFC043),
-          ),
-          width: 80.0,
-          child: Column(
-            children: [
-              Image.network("http://openweathermap.org/img/wn/" +
-                  weatherweekdata[index]['weather'][0]['icon'].toString() +
-                  "@2x.png"),
-              Text(
-                weatherweekdata[index]['temp']['day'].toString() + '℃',
-                style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      fontSize: MediaQuery.of(context).size.height * 0.018,
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.w700),
-                ),
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: weatherweekdata.length,
+      itemBuilder: (context, index) => Container(
+        decoration: BoxDecoration(
+          color: Color(0xFFFFC043),
+        ),
+        width: 80.0,
+        child: Column(
+          children: [
+            Image.network("http://openweathermap.org/img/wn/" +
+                weatherweekdata[index]['weather'][0]['icon'].toString() +
+                "@2x.png"),
+            Text(
+              weatherweekdata[index]['temp']['day'].toString() + '℃',
+              style: GoogleFonts.openSans(
+                textStyle: TextStyle(
+                    fontSize: MediaQuery.of(context).size.height * 0.018,
+                    color: Colors.grey[800],
+                    fontWeight: FontWeight.w700),
               ),
-              Text(
-                DateFormat('E').format(DateTime.fromMillisecondsSinceEpoch(
-                    weatherweekdata[index]['dt'] * 1000)),
-                style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      fontSize: MediaQuery.of(context).size.height * 0.018,
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.w700),
-                ),
-              )
-            ],
-          ),
+            ),
+            Text(
+              DateFormat('E').format(DateTime.fromMillisecondsSinceEpoch(
+                  weatherweekdata[index]['dt'] * 1000)),
+              style: GoogleFonts.openSans(
+                textStyle: TextStyle(
+                    fontSize: MediaQuery.of(context).size.height * 0.018,
+                    color: Colors.grey[800],
+                    fontWeight: FontWeight.w700),
+              ),
+            )
+          ],
         ),
       ),
     );
