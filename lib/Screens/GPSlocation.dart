@@ -98,7 +98,7 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
   Widget build(BuildContext context) {
     return isNull == true
         ? Scaffold(
-            backgroundColor: Color(0xFFFFC043),
+            // backgroundColor: Color(0xFFFFC043),
             body: Center(
               child: CircularProgressIndicator(
                 color: Color(0xFF00D3DB),
