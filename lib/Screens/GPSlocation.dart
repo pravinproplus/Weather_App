@@ -231,6 +231,9 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                       height: 140.0,
                       child: WeekWeatherScreen(),
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Text(
                       'Hour',
                       style: GoogleFonts.openSans(
@@ -242,7 +245,7 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                     ),
                     SizedBox(height: 20.0),
                     Container(
-                      height: 150.0,
+                      height: 130.0,
                       child: HourScreen(),
                     ),
                   ],
