@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_task/Network/LocationGet.dart';
+import 'package:weather_task/Screens/HomeScreen.dart';
 import 'package:weather_task/Screens/HourScreen.dart';
 import 'package:weather_task/Screens/WeekWeatherScreen.dart';
 import '../Network/NetworkHelper.dart';
@@ -129,17 +130,34 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 10.0,
+                            height: 5.0,
                           ),
-                          Text("$main",
-                              style: GoogleFonts.openSans(
-                                textStyle: TextStyle(
-                                    fontSize:
-                                        MediaQuery.of(context).size.height *
-                                            0.050,
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.w700),
-                              )),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () => Navigator.pop(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen())),
+                                icon: Icon(
+                                  Icons.keyboard_backspace,
+                                  size: 30.0,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 65.0,
+                              ),
+                              Text("$main",
+                                  style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.height *
+                                                0.050,
+                                        color: Colors.grey[800],
+                                        fontWeight: FontWeight.w700),
+                                  )),
+                            ],
+                          ),
                           Row(
                             children: [
                               SizedBox(
