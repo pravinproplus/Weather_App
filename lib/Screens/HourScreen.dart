@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_task/Network/LocationGet.dart';
+import 'package:weather_task/Network/NetworkHelper.dart';
 import 'package:weather_task/Screens/GPSlocation.dart';
 
 class HourScreen extends StatefulWidget {
@@ -30,26 +31,32 @@ class _HourScreenState extends State<HourScreen> {
     setState(() {
       lat = location.latitude;
       long = location.longtitude;
-      getWeatherData();
+      gethourData();
     });
   }
 
-  Future getWeatherData() async {
-    try {
-      Response response = await dio.get(
-          'http://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$long&exclude=minutely,daily&appid=$apiKey&units=metric');
-      var ds = response.data;
-      setState(() {
-        weatherhourdata = ds['hourly'];
-      });
-      // print(weatherweekdata[0]['temp']);
-    } catch (e) {
-      print(e);
-    }
+  Future gethourData() async {
+    NetworkHelper networkHelper = NetworkHelper(
+        'http://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$long&exclude=minutely,daily&appid=$apiKey&units=metric');
+    var ds = await networkHelper.getData();
+    setState(() {
+      weatherhourdata = ds['hourly'];
+    });
+  }
+
+  Widget displayIcon(int index, double h) {
+    return Image.network(
+      "http://openweathermap.org/img/wn/" +
+          weatherhourdata[index]['weather'][0]['icon'].toString() +
+          "@2x.png",
+      height: h / 11.5,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: weatherhourdata.length,
@@ -57,14 +64,9 @@ class _HourScreenState extends State<HourScreen> {
         decoration: BoxDecoration(
           color: Color(0xFFFFC043),
         ),
-        width: 60.0,
         child: Column(
           children: [
-            Image.network(
-              "http://openweathermap.org/img/wn/" +
-                  weatherhourdata[index]['weather'][0]['icon'].toString() +
-                  "@2x.png",
-            ),
+            displayIcon(index, h),
             Text(
               weatherhourdata[index]['temp'].toString() + '℃',
               style: GoogleFonts.openSans(

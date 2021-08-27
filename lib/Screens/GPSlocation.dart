@@ -97,6 +97,8 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return isNull == true
         ? Scaffold(
             // backgroundColor: Color(0xFFFFC043),
@@ -115,7 +117,7 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                 child: Column(
                   children: [
                     Container(
-                      height: 350.0,
+                      height: h / 2,
                       width: double.maxFinite,
                       decoration: BoxDecoration(
                         // color: Colors.blue,
@@ -129,9 +131,6 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                       ),
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 5.0,
-                          ),
                           Row(
                             children: [
                               IconButton(
@@ -141,11 +140,11 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                                         builder: (context) => HomeScreen())),
                                 icon: Icon(
                                   Icons.keyboard_backspace,
-                                  size: 30.0,
+                                  size: h / 22,
                                 ),
                               ),
                               SizedBox(
-                                width: 65.0,
+                                width: w / 5,
                               ),
                               Text("$main",
                                   style: GoogleFonts.openSans(
@@ -159,10 +158,8 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                             ],
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                width: 70.0,
-                              ),
                               //circular indicator
                               date == null
                                   ? CircularProgressIndicator()
@@ -208,49 +205,49 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                                     fontWeight: FontWeight.w700)),
                           ),
                           displayIcon(),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 43.0,
-                              ),
-                              Text(
-                                "Wind Speed : $windspeed/hr",
-                                style: GoogleFonts.openSans(
-                                    textStyle: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.height *
+                          Container(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: h / 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "Wind Speed : $windspeed/hr",
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
                                                 0.018,
-                                        color: Colors.grey[800],
-                                        fontWeight: FontWeight.w700)),
-                              ),
-                              SizedBox(
-                                width: 60.0,
-                              ),
-                              Text(
-                                "Humidity: $humd",
-                                style: GoogleFonts.openSans(
-                                    textStyle: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.height *
+                                            color: Colors.grey[800],
+                                            fontWeight: FontWeight.w700)),
+                                  ),
+                                  Text(
+                                    "Humidity: $humd",
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
                                                 0.018,
-                                        color: Colors.grey[800],
-                                        fontWeight: FontWeight.w700)),
+                                            color: Colors.grey[800],
+                                            fontWeight: FontWeight.w700)),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           )
                         ],
                       ),
                     ),
                     Container(
                       width: double.maxFinite,
-                      height: 140.0,
+                      height: h / 6,
                       child: WeekWeatherScreen(),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: h / 25,
                     ),
                     Text(
                       'Hour',
@@ -261,9 +258,9 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                               color: Colors.grey[800],
                               fontWeight: FontWeight.w700)),
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: h / 35),
                     Container(
-                      height: 130.0,
+                      height: h / 6,
                       child: HourScreen(),
                     ),
                   ],

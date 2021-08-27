@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_task/Network/LocationGet.dart';
+import 'package:weather_task/Network/NetworkHelper.dart';
 import 'package:weather_task/Screens/GPSlocation.dart';
 
 // ignore: must_be_immutable
@@ -29,26 +30,32 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
     setState(() {
       lat = location.latitude;
       long = location.longtitude;
-      getWeatherData();
+      getWeekData();
     });
   }
 
-  Future getWeatherData() async {
-    try {
-      Response response = await dio.get(
-          'http://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$long&exclude=minutely&appid=$apiKey&units=metric');
-      var ds = response.data;
-      setState(() {
-        weatherweekdata = ds['daily'];
-      });
-      print(weatherweekdata[0]['temp']);
-    } catch (e) {
-      print(e);
-    }
+  Future getWeekData() async {
+    NetworkHelper networkHelper = NetworkHelper(
+        'http://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$long&exclude=minutely,&appid=$apiKey&units=metric');
+    var ds = await networkHelper.getData();
+    setState(() {
+      weatherweekdata = ds['daily'];
+    });
+  }
+
+  Widget displayIcon(int index, double h) {
+    return Image.network(
+      "http://openweathermap.org/img/wn/" +
+          weatherweekdata[index]['weather'][0]['icon'].toString() +
+          "@2x.png",
+      height: h / 9,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: weatherweekdata.length,
@@ -56,12 +63,9 @@ class _WeekWeatherScreenState extends State<WeekWeatherScreen> {
         decoration: BoxDecoration(
           color: Color(0xFFFFC043),
         ),
-        width: 80.0,
         child: Column(
           children: [
-            Image.network("http://openweathermap.org/img/wn/" +
-                weatherweekdata[index]['weather'][0]['icon'].toString() +
-                "@2x.png"),
+            displayIcon(index, h),
             Text(
               weatherweekdata[index]['temp']['day'].toString() + '℃',
               style: GoogleFonts.openSans(

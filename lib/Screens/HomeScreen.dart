@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             body: Center(
-              child: Text('hi'),
+              child: Text('Welcome to OneFarmer'),
             ),
           );
   }
