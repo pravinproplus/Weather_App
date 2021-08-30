@@ -117,7 +117,7 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                 child: Column(
                   children: [
                     Container(
-                      height: h / 2,
+                      height: h / 2.1,
                       width: double.maxFinite,
                       decoration: BoxDecoration(
                         // color: Colors.blue,
@@ -135,37 +135,40 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                           SizedBox(
                             height: h * 0.015,
                           ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: w / 40,
-                              ),
-                              IconButton(
-                                onPressed: () => Navigator.pop(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomeScreen())),
-                                icon: Icon(
-                                  Icons.keyboard_backspace,
-                                  size: h / 25,
+                          Container(
+                            height: h / 15,
+                            width: h,
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: w / 30,
+                                  child: IconButton(
+                                    onPressed: () => Navigator.pop(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen())),
+                                    icon: Icon(
+                                      Icons.keyboard_backspace,
+                                      size: h / 25,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: w / 6,
-                              ),
-                              Container(
-                                child: Text("$main",
-                                    style: GoogleFonts.openSans(
-                                      textStyle: TextStyle(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.050,
-                                          color: Colors.grey[800],
-                                          fontWeight: FontWeight.w700),
-                                    )),
-                              ),
-                            ],
+                                Positioned(
+                                  left: w / 2.7,
+                                  child: Text("$main",
+                                      style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.050,
+                                            color: Colors.grey[800],
+                                            fontWeight: FontWeight.w700),
+                                      )),
+                                ),
+                              ],
+                            ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
