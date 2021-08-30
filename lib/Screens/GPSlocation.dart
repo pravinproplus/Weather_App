@@ -155,17 +155,22 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                                   ),
                                 ),
                                 Positioned(
-                                  left: w / 2.7,
-                                  child: Text("$main",
-                                      style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.050,
-                                            color: Colors.grey[800],
-                                            fontWeight: FontWeight.w700),
-                                      )),
+                                  left: w / 4,
+                                  child: Container(
+                                    width: w / 2,
+                                    child: Center(
+                                      child: Text("$main",
+                                          style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.050,
+                                                color: Colors.grey[800],
+                                                fontWeight: FontWeight.w700),
+                                          )),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
