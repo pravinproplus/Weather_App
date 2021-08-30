@@ -250,7 +250,7 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                       height: h / 25,
                     ),
                     Text(
-                      'Hour',
+                      'Hour Based',
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                               fontSize:
