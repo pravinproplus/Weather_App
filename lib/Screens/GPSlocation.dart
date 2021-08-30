@@ -130,9 +130,16 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                             ]),
                       ),
                       child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          SizedBox(
+                            height: h * 0.015,
+                          ),
                           Row(
                             children: [
+                              SizedBox(
+                                width: w / 40,
+                              ),
                               IconButton(
                                 onPressed: () => Navigator.pop(
                                     context,
@@ -140,21 +147,24 @@ class _GetGPSlocationState extends State<GetGPSlocation> {
                                         builder: (context) => HomeScreen())),
                                 icon: Icon(
                                   Icons.keyboard_backspace,
-                                  size: h / 22,
+                                  size: h / 25,
                                 ),
                               ),
                               SizedBox(
-                                width: w / 5,
+                                width: w / 6,
                               ),
-                              Text("$main",
-                                  style: GoogleFonts.openSans(
-                                    textStyle: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.height *
-                                                0.050,
-                                        color: Colors.grey[800],
-                                        fontWeight: FontWeight.w700),
-                                  )),
+                              Container(
+                                child: Text("$main",
+                                    style: GoogleFonts.openSans(
+                                      textStyle: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.050,
+                                          color: Colors.grey[800],
+                                          fontWeight: FontWeight.w700),
+                                    )),
+                              ),
                             ],
                           ),
                           Row(
