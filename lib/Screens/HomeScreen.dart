@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? iconn;
   bool isNull = true;
   String? urls;
+  String? main;
   Dio dio = Dio();
   var currentdata;
   @override
@@ -45,22 +46,39 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         iconn = ds['weather'][0]['icon'];
         urls = "http://openweathermap.org/img/wn/$iconn@2x.png";
+        main = ds['weather'][0]['main'];
         isNull = !isNull;
       });
-      print(urls);
+      print(ds);
     } catch (e) {
       print(e);
     }
   }
 
-  Widget displayIcon() {
-    return Image(
-      image: NetworkImage(urls!),
+  Widget displayIcon(double h) {
+    return Column(
+      children: [
+        Image.network(
+          urls!,
+          height: h / 20,
+        ),
+        Text(
+          main.toString(),
+          style: GoogleFonts.openSans(
+            textStyle: TextStyle(
+                fontSize: MediaQuery.of(context).size.height * 0.013,
+                color: Colors.grey[800],
+                fontWeight: FontWeight.w700),
+          ),
+        )
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return isNull == true
         ? Center(child: CircularProgressIndicator())
         : Scaffold(
@@ -78,9 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               actions: [
                 InkWell(
-                  child: urls == null
-                      ? CircularProgressIndicator()
-                      : displayIcon(),
+                  child: displayIcon(h),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -88,6 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(width: w / 34),
               ],
             ),
             body: Center(
